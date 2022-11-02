@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import '../models/product_model.dart';
@@ -38,11 +40,29 @@ class Products extends ChangeNotifier {
     ),
   ];
 
-  List<Product> get items => [..._items];
+  // var _showFavoritesOnly = false;
+
+  List<Product> get items {
+    return [..._items];
+  }
+
+  List<Product> get favoriteItems {
+    return _items.where((element) => element.isFavourite).toList();
+  }
 
   Product findById(String id) {
     return _items.firstWhere((element) => element.id == id);
   }
+
+  // void showFavoritesOnly() {
+  //   _showFavoritesOnly = true;
+  //   notifyListeners();
+  // }
+
+  // void showAll() {
+  //   _showFavoritesOnly = false;
+  //   notifyListeners();
+  // }
 
   void addProduct() {
     // _items.add();
