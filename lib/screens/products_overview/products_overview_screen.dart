@@ -3,8 +3,11 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/models/product_model.dart';
+import 'package:shop_app/providers/cart_provider.dart';
+import 'package:shop_app/screens/cart/cart_screen.dart';
 import 'package:shop_app/screens/products_overview/widgets/badge_widget.dart';
 import 'package:shop_app/screens/products_overview/widgets/product_Item_widget.dart';
+import 'package:shop_app/widgets/app_drawer.dart';
 
 import '../../providers/products_provider.dart';
 import 'widgets/products_grid_widget.dart';
@@ -52,16 +55,20 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
               )
             ],
           ),
-          Badge(
-            value: value,
-            color: color,
+          Consumer<Cart>(
+            builder: (_, cartData, ch) => Badge(
+                value: cartData.itemCount.toString(),
+                color: Colors.red,
+                child: ch!),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () =>
+                  Navigator.of(context).pushNamed(CartScreen.routeName),
               icon: const Icon(Icons.shopping_cart),
             ),
-          )
+          ),
         ],
       ),
+      drawer: const AppDrawer(),
       body: ProductsGrid(_showOnlyFavorites),
     );
   }
