@@ -54,18 +54,22 @@ class Products extends ChangeNotifier {
     return _items.firstWhere((element) => element.id == id);
   }
 
-  // void showFavoritesOnly() {
-  //   _showFavoritesOnly = true;
-  //   notifyListeners();
-  // }
+  void addProduct(Product product) {
+    final newProduct = Product(
+        id: DateTime.now().toString(),
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl);
 
-  // void showAll() {
-  //   _showFavoritesOnly = false;
-  //   notifyListeners();
-  // }
+    _items.add(newProduct);
+    // _items.insert(0, newProduct);
+    notifyListeners();
+  }
 
-  void addProduct() {
-    // _items.add();
+  void updateProduct(String id, Product newProduct) {
+    final prodIndex = _items.indexWhere((element) => element.id == id);
+    _items[prodIndex] = newProduct;
     notifyListeners();
   }
 }

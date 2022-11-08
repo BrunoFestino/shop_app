@@ -3,8 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:shop_app/providers/cart_provider.dart';
 import 'package:shop_app/providers/orders_provider.dart';
 import 'package:shop_app/screens/cart/cart_screen.dart';
+import 'package:shop_app/screens/edit_product/edit_product_screen.dart';
 import 'package:shop_app/screens/orders/orders_screen.dart';
 import 'package:shop_app/screens/product_details/product_detail_screen.dart';
+import 'package:shop_app/screens/user_products/user_products_screen.dart';
 
 import 'providers/products_provider.dart';
 import 'screens/products_overview/products_overview_screen.dart';
@@ -37,11 +39,13 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
                 .copyWith(secondary: Colors.deepOrange),
             fontFamily: 'Lato'),
-        home: ProductOverviewScreen(),
+        home: const ProductOverviewScreen(),
         routes: {
           ProductDetailScreen.routeName: (ctx) => const ProductDetailScreen(),
           CartScreen.routeName: (ctx) => const CartScreen(),
-          OrdersScreen.routeName: (ctx) => const OrdersScreen()
+          OrdersScreen.routeName: (ctx) => const OrdersScreen(),
+          UserProductsScreen.routeName: (ctx) => const UserProductsScreen(),
+          EditProductScreen.routeName: (ctx) => const EditProductScreen(),
         },
       ),
     );

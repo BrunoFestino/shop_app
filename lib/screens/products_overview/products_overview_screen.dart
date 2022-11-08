@@ -18,7 +18,7 @@ enum FilterOptions {
 }
 
 class ProductOverviewScreen extends StatefulWidget {
-  ProductOverviewScreen({super.key});
+  const ProductOverviewScreen({super.key});
 
   @override
   State<ProductOverviewScreen> createState() => _ProductOverviewScreenState();
