@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app/models/product_model.dart';
+import 'package:shop_app/providers/products_provider.dart';
 import 'package:shop_app/screens/edit_product/edit_product_screen.dart';
 
 class UserProductItem extends StatelessWidget {
@@ -11,7 +14,6 @@ class UserProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: prefer_const_constructors
     return ListTile(
       trailing: Container(
         width: 100,
@@ -27,7 +29,9 @@ class UserProductItem extends StatelessWidget {
             ),
             IconButton(
               color: Theme.of(context).colorScheme.error,
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<Products>(context, listen: false).deleteProduct(id);
+              },
               icon: const Icon(Icons.delete),
             )
           ],

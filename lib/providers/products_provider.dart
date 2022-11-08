@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 import '../models/product_model.dart';
@@ -70,6 +68,11 @@ class Products extends ChangeNotifier {
   void updateProduct(String id, Product newProduct) {
     final prodIndex = _items.indexWhere((element) => element.id == id);
     _items[prodIndex] = newProduct;
+    notifyListeners();
+  }
+
+  void deleteProduct(String id) {
+    _items.removeWhere((element) => element.id == id);
     notifyListeners();
   }
 }
