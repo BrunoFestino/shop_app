@@ -1,6 +1,10 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import '../models/product_model.dart';
+import 'package:http/http.dart' as http;
 
 class Products extends ChangeNotifier {
   List<Product> _items = [
@@ -52,17 +56,36 @@ class Products extends ChangeNotifier {
     return _items.firstWhere((element) => element.id == id);
   }
 
-  void addProduct(Product product) {
-    final newProduct = Product(
-        id: DateTime.now().toString(),
-        title: product.title,
-        description: product.description,
-        price: product.price,
-        imageUrl: product.imageUrl);
-
-    _items.add(newProduct);
-    // _items.insert(0, newProduct);
-    notifyListeners();
+  Future<void> addProduct(Product product) {
+    final url = Uri.parse(
+        'https://shop-app-50b1d-default-rtdb.firebaseio.com/products.');
+    try {
+      return http
+          .post(
+        url,
+        body: json.encode(
+          {
+            'title': product.title,
+            'description': product.description,
+            'imageUrl': product.imageUrl,
+            'isfavorite': product.isFavourite
+          },
+        ),
+      )
+          .then((reponse) {
+        final decodeResponse = json.decode(reponse.body);
+        final newProduct = Product(
+            id: decodeResponse['name'],
+            title: product.title,
+            description: product.description,
+            price: product.price,
+            imageUrl: product.imageUrl);
+        _items.add(newProduct);
+        notifyListeners();
+      });
+    } catch (e) {
+      rethrow;
+    }
   }
 
   void updateProduct(String id, Product newProduct) {
@@ -73,6 +96,7 @@ class Products extends ChangeNotifier {
 
   void deleteProduct(String id) {
     _items.removeWhere((element) => element.id == id);
+
     notifyListeners();
   }
 }
