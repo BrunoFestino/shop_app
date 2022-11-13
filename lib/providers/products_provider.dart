@@ -92,6 +92,9 @@ class Products extends ChangeNotifier {
         'https://shop-app-50b1d-default-rtdb.firebaseio.com/products.json';
     try {
       final response = await http.get(Uri.parse(url));
+      if (json.decode(response.body) == null) {
+        return;
+      }
       final responseData = json.decode(response.body) as Map<String, dynamic>;
       final List<Product> loadedProduct = [];
       responseData.forEach(
