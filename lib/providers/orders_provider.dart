@@ -8,12 +8,15 @@ import 'package:http/http.dart' as http;
 
 class Orders extends ChangeNotifier {
   List<OrderItem> _orders = [];
+  final String? authtoken;
+  final String? userId;
+  Orders(this.authtoken, this._orders, this.userId);
 
   List<OrderItem> get orders => [..._orders];
 
   Future<void> fetchAndSetOrders() async {
     final url = Uri.parse(
-        'https://shop-app-50b1d-default-rtdb.firebaseio.com/orders.json');
+        'https://shop-app-50b1d-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authtoken');
     final response = await http.get(url);
     final List<OrderItem> loadedOrders = [];
 
@@ -43,7 +46,7 @@ class Orders extends ChangeNotifier {
 
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
     final url = Uri.parse(
-        'https://shop-app-50b1d-default-rtdb.firebaseio.com/orders.json');
+        'https://shop-app-50b1d-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authtoken');
     final timestamp = DateTime.now();
     final response = await http.post(url,
         body: jsonEncode({
